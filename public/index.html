@@ -299,21 +299,21 @@
       }
     }
 
-    /* --- FORCE 4 ITEMS PER ROW ON BOTH DESKTOP AND MOBILE --- */
+    /* --- 4 ITEMS PER ROW ON COMPUTER, 2 ON PHONES --- */
     .product-grid, .products-container, #productContainer {
       display: grid !important;
       grid-template-columns: repeat(4, 1fr) !important;
-      gap: 12px !important;
-      padding: 10px !important;
+      gap: 15px !important;
+      padding: 10px 0 !important;
     }
 
     .product-card, .card {
       width: 100% !important;
       max-width: 100% !important;
-      padding: 10px !important;
+      padding: 12px !important;
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -321,29 +321,49 @@
     }
 
     .product-card img, .card img {
-      height: 110px !important;
+      height: 130px !important;
       width: 100% !important;
       object-fit: cover !important;
-      border-radius: 8px;
+      border-radius: 10px;
     }
 
     .product-card h3, .card h3, .card-title {
-      font-size: 13px !important;
+      font-size: 14px !important;
       font-weight: 700 !important;
-      margin: 6px 0 4px 0 !important;
+      margin: 8px 0 4px 0 !important;
     }
 
     .product-card p, .card p, .card-price {
-      font-size: 12px !important;
-      margin: 2px 0 6px 0 !important;
+      font-size: 13px !important;
+      margin: 2px 0 8px 0 !important;
     }
 
     .product-card button, .card button, .btn {
-      padding: 5px 8px !important;
-      font-size: 11px !important;
-      border-radius: 6px !important;
+      padding: 6px 10px !important;
+      font-size: 12px !important;
+      border-radius: 8px !important;
       width: 100% !important;
       justify-content: center !important;
+    }
+
+    /* Phone screen: 2 items per row so it looks clean and readable */
+    @media (max-width: 768px) {
+      .product-grid, .products-container, #productContainer {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+
+      .product-card img, .card img {
+        height: 100px !important;
+      }
+
+      .product-card h3, .card h3, .card-title {
+        font-size: 12px !important;
+      }
+
+      .product-card p, .card p, .card-price {
+        font-size: 11px !important;
+      }
     }
   </style>
 </head>
