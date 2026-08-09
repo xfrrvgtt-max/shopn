@@ -299,18 +299,18 @@
       }
     }
 
-    /* --- COMPACT PRODUCTS GRID FOR DESKTOP & MOBILE --- */
+    /* --- PRODUCTS GRID FOR DESKTOP & MOBILE --- */
     .product-grid, .products-container, #productContainer {
       display: grid !important;
       grid-template-columns: repeat(4, 1fr) !important;
-      gap: 12px !important;
+      gap: 16px !important;
       padding: 10px !important;
     }
 
     .product-card, .card {
       width: 100% !important;
       max-width: 100% !important;
-      padding: 8px !important;
+      padding: 12px !important;
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 16px;
@@ -321,35 +321,48 @@
     }
 
     .product-card img, .card img {
-      height: 120px !important;
+      height: 150px !important;
       width: 100% !important;
       object-fit: cover !important;
-      border-radius: 12px;
+      border-radius: 10px;
     }
 
-    /* Mobile: Force 2 small items per row */
+    /* Professional E-Commerce Mobile Styling (2 items per row, clean touch targets) */
     @media (max-width: 768px) {
       .product-grid, .products-container, #productContainer {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 6px !important;
-        padding: 4px !important;
+        gap: 10px !important;
+        padding: 6px !important;
+      }
+
+      .product-card, .card {
+        padding: 10px !important;
+        border-radius: 12px !important;
       }
 
       .product-card img, .card img {
-        height: 90px !important;
+        height: 120px !important;
+        border-radius: 8px !important;
       }
 
-      .product-card h3, .card h3 {
+      .product-card h3, .card h3, .card-title {
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        margin: 6px 0 4px 0 !important;
+        line-height: 1.2 !important;
+      }
+
+      .product-card p, .card p, .card-price {
         font-size: 12px !important;
+        margin: 2px 0 8px 0 !important;
       }
 
-      .product-card p, .card p {
-        font-size: 10px !important;
-      }
-
-      .product-card button, .card button {
-        padding: 4px 6px !important;
-        font-size: 10px !important;
+      .product-card button, .card button, .btn {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        border-radius: 6px !important;
+        width: 100% !important;
+        justify-content: center !important;
       }
     }
   </style>
