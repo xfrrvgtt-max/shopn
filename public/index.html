@@ -80,31 +80,22 @@
       white-space: nowrap;
     }
 
-    header nav, 
-    header div, 
-    .header-actions, 
-    .controls {
+    /* Target ONLY the direct navigation items container if separate, keeping them inline */
+    header nav {
       display: flex !important;
       flex-direction: row !important;
       align-items: center !important;
       gap: 6px !important;
       width: auto !important;
       margin: 0 !important;
-      padding: 0 !important;
       background: transparent !important;
-      box-shadow: none !important;
     }
 
-    header button, 
-    header .btn, 
-    header select {
-      width: auto !important;
-      padding: 5px 10px !important;
-      font-size: 12px !important;
-      margin: 0 !important;
-      display: inline-flex !important;
-      align-items: center !important;
-      white-space: nowrap;
+    /* Prevent full-width blowout on form fields and standalone blocks */
+    input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      max-width: 100% !important;
     }
 
     .container {
