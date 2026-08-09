@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "iPhone 15 Pro Max",
+    "category": "Smartphones",
+    "price": 120000,
+    "stock": 10,
+    "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500"
+  },
+  {
+    "id": 2,
+    "title": "Samsung Galaxy S24 Ultra",
+    "category": "Smartphones",
+    "price": 135000,
+    "stock": 8,
+    "image": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500"
+  },
+  {
+    "id": 3,
+    "title": "MacBook Pro 16",
+    "category": "Laptops",
+    "price": 250000,
+    "stock": 5,
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500"
+  }
+]

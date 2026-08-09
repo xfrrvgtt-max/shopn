@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Tech Store</title>
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --text-color: #0f172a;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    body.dark-mode {
+      --bg-color: #090d16;
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: #111827;
+      --border-color: #1f2937;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+      --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.5);
+      --glass-bg: rgba(17, 24, 39, 0.85);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding-top: 110px;
+      padding-bottom: 40px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .promo-banner {
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      color: white;
+      text-align: center;
+      padding: 8px 15px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1100;
+    }
+
+    header {
+      position: fixed;
+      top: 33px;
+      left: 0;
+      right: 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 5%;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.04);
+      padding: 4px;
+      border-radius: 30px;
+    }
+
+    body.dark-mode nav {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    nav button.nav-link {
+      background: transparent;
+      color: var(--text-color);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    nav button.nav-link.active {
+      background-color: var(--primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .category-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .category-btn {
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 13px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .category-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(79, 70, 229, 0.3);
+    }
+
+    .card-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: #f1f5f9;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .badge-category {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-stock {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .stock-low { background: #fef3c7; color: #b45309; }
+    .stock-ok { background: #d1fae5; color: #047857; }
+    .stock-out { background: #fee2e2; color: #b91c1c; }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 8px 0;
+      line-height: 1.3;
+    }
+
+    .card-price {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 6px 0;
+    }
+
+    .floating-cart {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+      cursor: pointer;
+      z-index: 999;
+      border: none;
+      transition: transform 0.2s ease;
+    }
+
+    .floating-cart:hover {
+      transform: scale(1.1);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: var(--danger);
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 3px 7px;
+      border-radius: 10px;
+      border: 2px solid var(--card-bg);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 20px;
+      width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    input, select {
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+    }
+
+    .hero-container {
+      background: linear-gradient(135deg, rgba(79,70,229,0.1), rgba(6,182,212,0.1));
+      padding: 50px 30px;
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROMOTIONAL BANNER -->
+  <div class="promo-banner">
+    🚚 Free express delivery across Addis Ababa for orders over 10,000 ETB!
+  </div>
+
+  <!-- FIXED STICKY HEADER -->
+  <header>
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <h1 class="brand-title" id="txt-title">⚡ TechStore</h1>
+      <nav id="main-nav">
+        <button class="nav-link active" id="nav-home" onclick="switchTab('home')">Home</button>
+        <button class="nav-link" id="nav-shop" onclick="switchTab('shop')">Shop</button>
+        <button class="nav-link" id="nav-contact" onclick="switchTab('contact')">Contact</button>
+      </nav>
+    </div>
+
+    <div class="controls">
+      <button class="btn" onclick="toggleCurrency()" id="currency-btn">💱 ETB</button>
+      <button class="btn" onclick="toggleLanguage()" id="lang-btn">🌐 🇪🇹 አማርኛ</button>
+      <button class="btn" onclick="toggleDarkMode()">🌓 Mode</button>
+      <button class="btn btn-primary" id="admin-btn" onclick="handleAdminAuth()">🔐 Admin</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- HOME VIEW -->
+    <div id="page-home">
+      <div class="hero-container">
+        <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 10px;" id="home-welcome-title">Next-Gen Electronics At Your Fingertips</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 25px auto;" id="home-welcome-desc">Explore original laptops, smartphones, high-fidelity audio, and official accessories with instant warranty.</p>
+        <button class="btn btn-primary" style="font-size: 16px; padding: 12px 28px; border-radius: 30px;" onclick="switchTab('shop')" id="home-btn-shop">
+          🛍️ Explore Catalog
+        </button>
+      </div>
+    </div>
+
+    <!-- SHOP VIEW -->
+    <div id="page-shop" style="display: none;">
+      <!-- CATEGORY BAR (WEARABLES REMOVED) -->
+      <div class="category-bar" id="category-bar">
+        <button class="category-btn active" onclick="filterCategory('All', this)" id="cat-all">All Products</button>
+        <button class="category-btn" onclick="filterCategory('Smartphones', this)" id="cat-phones">Smartphones</button>
+        <button class="category-btn" onclick="filterCategory('Laptops', this)" id="cat-laptops">Laptops</button>
+        <button class="category-btn" onclick="filterCategory('Accessories', this)" id="cat-acc">Accessories</button>
+        <button class="category-btn" onclick="filterCategory('Audio', this)" id="cat-audio">Audio</button>
+      </div>
+
+      <div id="admin-bar" style="display: none; margin-bottom: 20px;">
+        <button class="btn btn-primary" onclick="openProductModal()" id="txt-add-prod">➕ Add New Product</button>
+      </div>
+
+      <main class="grid" id="product-list"></main>
+    </div>
+
+    <!-- CONTACT VIEW -->
+    <div id="page-contact" style="display: none;">
+      <div style="background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); max-width: 600px; margin: 0 auto; text-align: center;">
+        <h2 id="cnt-title">📞 Customer Support</h2>
+        <p style="color: var(--text-muted);" id="cnt-subtitle">Have questions? We are available 24/7 to assist you.</p>
+        <hr style="border-color: var(--border-color); margin: 20px 0;">
+        <p>📍 <strong id="cnt-lbl-addr">Address:</strong> <span id="cnt-val-addr">Bole Road, Addis Ababa, Ethiopia</span></p>
+        <p>📱 <strong id="cnt-lbl-phone">Phone:</strong> +251 900 000 000</p>
+        <p>✉️ <strong id="cnt-lbl-email">Email:</strong> support@techstore.et</p>
+        <p>💬 <strong id="cnt-lbl-tg">Telegram Support:</strong> @TechStoreSupport</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING CART BUTTON -->
+  <button class="floating-cart" onclick="openCart()">
+    🛒
+    <span class="cart-badge" id="cart-count">0</span>
+  </button>
+
+  <!-- Add/Edit Modal -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="modal-title" style="margin:0;">Add Product</h3>
+      <form id="product-form" style="display:flex; flex-direction:column; gap:12px;">
+        <input type="hidden" id="prod-id">
+        <input type="text" id="prod-title" placeholder="Product Title" required>
+        <select id="prod-category" required>
+          <option value="Smartphones">Smartphones</option>
+          <option value="Laptops">Laptops</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Audio">Audio</option>
+        </select>
+        <input type="number" id="prod-price" placeholder="Price (ETB)" required>
+        <input type="number" id="prod-stock" placeholder="Stock Quantity" required>
+        <input type="url" id="prod-image" placeholder="Image URL (https://...)" required>
+        <button type="submit" class="btn btn-primary">Save Product</button>
+        <button type="button" class="btn" onclick="closeModal('product-modal')">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="txt-checkout-title" style="margin:0;">Complete Order</h3>
+      <div id="cart-summary" style="max-height: 150px; overflow-y: auto;"></div>
+      <p style="font-size: 16px;"><strong><span id="txt-cart-total-lbl">Total:</span></strong> <span id="cart-total" style="color:var(--primary); font-weight:bold;"></span></p>
+      
+      <form id="checkout-form" style="display:flex; flex-direction:column; gap:10px;">
+        <input type="text" id="cust-name" placeholder="Full Name" required>
+        <input type="tel" id="cust-phone" placeholder="Phone Number" required>
+        <input type="text" id="cust-address" placeholder="Delivery Address" required>
+        <label style="font-size: 12px; font-weight:600;" id="lbl-upload-receipt">Upload Payment Screenshot:</label>
+        <input type="file" id="cust-receipt" accept="image/*" required>
+        
+        <button type="submit" class="btn btn-primary" id="submit-btn">Send Order</button>
+        <button type="button" class="btn" onclick="closeModal('checkout-modal')">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PASS = "admin123";
+    let isAdmin = false;
+    let selectedCategory = "All";
+    let cart = [];
+    let currentCurrency = 'ETB'; 
+    const ETB_TO_USD_RATE = 125;
+    let currentLang = 'en';
+
+    const translations = {
+      en: {
+        title: "⚡ TechStore", home: "Home", shop: "Shop", contact: "Contact",
+        login: "🔐 Admin", logout: "🔓 Logout", cart: "Cart",
+        allProducts: "All Products", smartphones: "Smartphones", laptops: "Laptops",
+        accessories: "Accessories", audio: "Audio",
+        addNewProduct: "➕ Add New Product", homeWelcomeTitle: "Next-Gen Electronics At Your Fingertips",
+        homeWelcomeDesc: "Explore original laptops, smartphones, high-fidelity audio, and official accessories with instant warranty.",
+        homeBtnShop: "🛍️ Explore Catalog", cntTitle: "📞 Customer Support",
+        cntSub: "Have questions? We are available 24/7 to assist you.",
+        cntAddrLbl: "Address:", cntAddrVal: "Bole Road, Addis Ababa, Ethiopia",
+        cntPhoneLbl: "Phone:", cntEmailLbl: "Email:", cntTgLbl: "Telegram Support:",
+        priceLbl: "Price", stockLbl: "Stock", outOfStock: "Out of Stock",
+        addToCart: "Add to Cart", edit: "✏️ Edit", delete: "🗑️ Delete",
+        noProducts: "No products found.", checkoutTitle: "Complete Order",
+        totalLbl: "Total:", uploadReceipt: "Upload Payment Screenshot:", sendOrder: "Send Order"
+      },
+      am: {
+        title: "⚡ ቴክ-ሱቅ", home: "መነሻ ገጽ", shop: "ሱቅ", contact: "ያግኙን",
+        login: "🔐 አስተዳዳሪ", logout: "🔓 ውጣ", cart: "ካርት",
+        allProducts: "ሁሉም ምርቶች", smartphones: "ስማርትፎኖች", laptops: "ላፕቶፖች",
+        accessories: "አክሰሰሪዎች", audio: "ድምጽ እና ስፒከር",
+        addNewProduct: "➕ አዲስ ምርት ጨምር", homeWelcomeTitle: "ዘመናዊ የኤሌክትሮኒክስ ዕቃዎች በእጅዎ",
+        homeWelcomeDesc: "ኦሪጅናል ላፕቶፖች፣ ስማርትፎኖች እና አክሰሰሪዎችን ከአስተማማኝ ዋስትና ጋር ያግኙ።",
+        homeBtnShop: "🛍️ አሁኑኑ ይጎብኙ", cntTitle: "📞 የደንበኞች ድጋፍ",
+        cntSub: "ጥያቄ አለዎት? ሁልጊዜ ልንረዳዎ ዝግጁ ነን።",
+        cntAddrLbl: "አድራሻ:", cntAddrVal: "ቦሌ መንገድ፣ አዲስ አበባ፣ ኢትዮጵያ",
+        cntPhoneLbl: "ስልክ:", cntEmailLbl: "ኢሜይል:", cntTgLbl: "ቴሌግራም ድጋፍ:",
+        priceLbl: "ዋጋ", stockLbl: "ክምችት", outOfStock: "ያለቀ",
+        addToCart: "ወደ ካርት ጨምር", edit: "✏️ አርም", delete: "🗑️ ሰርዝ",
+        noProducts: "ምንም ምርት አልተገኘም።", checkoutTitle: "ትዕዛዙን ያጠናቅቁ",
+        totalLbl: "ድምር:", uploadReceipt: "የክፍያ ደረሰኝ ፎቶ ያያይዙ:", sendOrder: "ትዕዛዝ ላክ"
+      }
+    };
+
+    // COMPLETE 60 PRODUCTS
+    let products = [
+      { id: 1, title: "iPhone 15 Pro Max 256GB", category: "Smartphones", price: 175000, stock: 8, image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400" },
+      { id: 2, title: "Samsung Galaxy S24 Ultra", category: "Smartphones", price: 165000, stock: 10, image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400" },
+      { id: 3, title: "iPhone 14 Pro 128GB", category: "Smartphones", price: 135000, stock: 5, image: "https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?w=400" },
+      { id: 4, title: "Google Pixel 8 Pro", category: "Smartphones", price: 110000, stock: 7, image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400" },
+      { id: 5, title: "Xiaomi 13 Ultra", category: "Smartphones", price: 95000, stock: 12, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400" },
+      { id: 6, title: "OnePlus 12 512GB", category: "Smartphones", price: 105000, stock: 6, image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=400" },
+      { id: 7, title: "Samsung Galaxy Z Fold 5", category: "Smartphones", price: 210000, stock: 4, image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400" },
+      { id: 8, title: "iPhone 13 128GB", category: "Smartphones", price: 88000, stock: 15, image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400" },
+      { id: 9, title: "Samsung Galaxy A54 5G", category: "Smartphones", price: 42000, stock: 20, image: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?w=400" },
+      { id: 10, title: "Tecno Camon 30 Pro", category: "Smartphones", price: 38000, stock: 18, image: "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?w=400" },
+      { id: 11, title: "MacBook Pro 16\" M3 Max", category: "Laptops", price: 420000, stock: 3, image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400" },
+      { id: 12, title: "MacBook Air 13\" M2", category: "Laptops", price: 145000, stock: 9, image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400" },
+      { id: 13, title: "Dell XPS 15 i9 32GB RAM", category: "Laptops", price: 280000, stock: 4, image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400" },
+      { id: 14, title: "Lenovo ThinkPad X1 Carbon", category: "Laptops", price: 210000, stock: 6, image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400" },
+      { id: 15, title: "HP Spectre x360", category: "Laptops", price: 185000, stock: 5, image: "https://images.unsplash.com/photo-1544731612-de7f96afe55f?w=400" },
+      { id: 16, title: "ASUS ROG Zephyrus G14", category: "Laptops", price: 230000, stock: 4, image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400" },
+      { id: 17, title: "Acer Predator Helios 300", category: "Laptops", price: 165000, stock: 7, image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400" },
+      { id: 18, title: "Microsoft Surface Laptop 5", category: "Laptops", price: 155000, stock: 8, image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400" },
+      { id: 19, title: "HP Pavilion 15 Core i5", category: "Laptops", price: 78000, stock: 12, image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400" },
+      { id: 20, title: "Lenovo IdeaPad Slim 3", category: "Laptops", price: 65000, stock: 15, image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400" },
+      { id: 21, title: "Anker 65W GaN Fast Charger", category: "Accessories", price: 6500, stock: 25, image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=400" },
+      { id: 22, title: "Logitech MX Master 3S Mouse", category: "Accessories", price: 16000, stock: 14, image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400" },
+      { id: 23, title: "Apple MagSafe Battery Pack", category: "Accessories", price: 14500, stock: 10, image: "https://images.unsplash.com/photo-1609592424074-138356f14067?w=400" },
+      { id: 24, title: "Keychron K2 Mechanical Keyboard", category: "Accessories", price: 18000, stock: 8, image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400" },
+      { id: 25, title: "Samsung T7 1TB Portable SSD", category: "Accessories", price: 19500, stock: 11, image: "https://images.unsplash.com/photo-1597872250969-258169b35b6b?w=400" },
+      { id: 26, title: "Anker PowerCore 20,000mAh", category: "Accessories", price: 8500, stock: 30, image: "https://images.unsplash.com/photo-1622445268121-da11d387332c?w=400" },
+      { id: 27, title: "USB-C 7-in-1 Hub Adapter", category: "Accessories", price: 5500, stock: 22, image: "https://images.unsplash.com/photo-1616440347437-b1c73416efc2?w=400" },
+      { id: 28, title: "SanDisk Ultra 128GB Flash Drive", category: "Accessories", price: 2200, stock: 50, image: "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=400" },
+      { id: 29, title: "Laptop Stand Aluminum", category: "Accessories", price: 4500, stock: 18, image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400" },
+      { id: 30, title: "Logitech C920 HD Webcam", category: "Accessories", price: 12500, stock: 9, image: "https://images.unsplash.com/photo-1587826080692-f439cd0b70da?w=400" },
+      { id: 31, title: "Apple AirPods Pro 2", category: "Audio", price: 38000, stock: 12, image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400" },
+      { id: 32, title: "Sony WH-1000XM5 Headphones", category: "Audio", price: 52000, stock: 7, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+      { id: 33, title: "Bose QuietComfort 45", category: "Audio", price: 46000, stock: 6, image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400" },
+      { id: 34, title: "JBL Charge 5 Bluetooth Speaker", category: "Audio", price: 24000, stock: 15, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400" },
+      { id: 35, title: "Samsung Galaxy Buds 2 Pro", category: "Audio", price: 26000, stock: 10, image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+      { id: 36, title: "Marshall Acton III Speaker", category: "Audio", price: 42000, stock: 5, image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400" },
+      { id: 37, title: "Anker Soundcore Life Q30", category: "Audio", price: 12500, stock: 20, image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" },
+      { id: 38, title: "Beats Studio Pro Wireless", category: "Audio", price: 48000, stock: 8, image: "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?w=400" },
+      { id: 39, title: "JBL GO 3 Portable Speaker", category: "Audio", price: 6500, stock: 25, image: "https://images.unsplash.com/photo-1558089687-f282ffcbc126?w=400" },
+      { id: 40, title: "HyperX Cloud II Gaming Headset", category: "Audio", price: 16500, stock: 11, image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=400" },
+      { id: 41, title: "Sony PlayStation 5 Digital", category: "Accessories", price: 92000, stock: 6, image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400" },
+      { id: 42, title: "Xbox Series X 1TB", category: "Accessories", price: 88000, stock: 5, image: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400" },
+      { id: 43, title: "Nintendo Switch OLED Model", category: "Accessories", price: 58000, stock: 9, image: "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400" },
+      { id: 44, title: "DJI Mini 3 Pro Drone", category: "Accessories", price: 135000, stock: 3, image: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400" },
+      { id: 45, title: "GoPro HERO12 Black", category: "Accessories", price: 62000, stock: 7, image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=400" },
+      { id: 46, title: "Kindle Paperwhite 16GB", category: "Accessories", price: 21000, stock: 15, image: "https://images.unsplash.com/photo-1592496001020-d31bd830651f?w=400" },
+      { id: 47, title: "iPad Air 10.9\" 64GB", category: "Laptops", price: 95000, stock: 8, image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400" },
+      { id: 48, title: "Samsung Galaxy Tab S9", category: "Laptops", price: 115000, stock: 6, image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400" },
+      { id: 49, title: "Canon EOS M50 Mark II", category: "Accessories", price: 110000, stock: 4, image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" },
+      { id: 50, title: "Ring Video Doorbell Wired", category: "Accessories", price: 14000, stock: 12, image: "https://images.unsplash.com/photo-1558002038-1055907df827?w=400" },
+      { id: 51, title: "TP-Link AX3000 WiFi 6 Router", category: "Accessories", price: 15500, stock: 16, image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400" },
+      { id: 52, title: "Smart LED Desk Lamp", category: "Accessories", price: 4800, stock: 25, image: "https://images.unsplash.com/photo-1534073828943-f801091bb18c?w=400" },
+      { id: 53, title: "Elgato Stream Deck MK.2", category: "Accessories", price: 22500, stock: 5, image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400" },
+      { id: 54, title: "Razer DeathAdder V3 Pro", category: "Accessories", price: 14500, stock: 10, image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400" },
+      { id: 55, title: "SteelSeries Arctis Nova Pro", category: "Audio", price: 34000, stock: 6, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" },
+      { id: 56, title: "Blue Yeti USB Microphone", category: "Audio", price: 18500, stock: 9, image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400" },
+      { id: 57, title: "ASUS TUF Gaming Monitor 27\"", category: "Accessories", price: 48000, stock: 7, image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400" },
+      { id: 58, title: "LG UltraGear OLED 27\"", category: "Accessories", price: 115000, stock: 3, image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=400" },
+      { id: 59, title: "Corsair Vengeance 32GB RAM", category: "Accessories", price: 16500, stock: 14, image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400" },
+      { id: 60, title: "WD_BLACK 2TB NVMe SSD", category: "Accessories", price: 24500, stock: 8, image: "https://images.unsplash.com/photo-1597872250969-258169b35b6b?w=400" }
+    ];
+
+    function formatPrice(priceInEtb) {
+      return currentCurrency === 'USD' 
+        ? `$${(priceInEtb / ETB_TO_USD_RATE).toFixed(2)}` 
+        : `${priceInEtb.toLocaleString()} ETB`;
+    }
+
+    function toggleCurrency() {
+      currentCurrency = (currentCurrency === 'ETB') ? 'USD' : 'ETB';
+      document.getElementById('currency-btn').innerText = `💱 ${currentCurrency}`;
+      renderProducts();
+    }
+
+    function toggleLanguage() {
+      currentLang = (currentLang === 'en') ? 'am' : 'en';
+      const t = translations[currentLang];
+      
+      document.getElementById('lang-btn').innerText = currentLang === 'en' ? '🌐 🇪🇹 አማርኛ' : '🌐 🇬🇧 English';
+      document.getElementById('txt-title').innerText = t.title;
+      document.getElementById('nav-home').innerText = t.home;
+      document.getElementById('nav-shop').innerText = t.shop;
+      document.getElementById('nav-contact').innerText = t.contact;
+      document.getElementById('admin-btn').innerText = isAdmin ? t.logout : t.login;
+
+      document.getElementById('home-welcome-title').innerText = t.homeWelcomeTitle;
+      document.getElementById('home-welcome-desc').innerText = t.homeWelcomeDesc;
+      document.getElementById('home-btn-shop').innerText = t.homeBtnShop;
+
+      document.getElementById('cat-all').innerText = t.allProducts;
+      document.getElementById('cat-phones').innerText = t.smartphones;
+      document.getElementById('cat-laptops').innerText = t.laptops;
+      document.getElementById('cat-acc').innerText = t.accessories;
+      document.getElementById('cat-audio').innerText = t.audio;
+
+      renderProducts();
+    }
+
+    function switchTab(tab) {
+      document.getElementById('nav-home').classList.toggle('active', tab === 'home');
+      document.getElementById('nav-shop').classList.toggle('active', tab === 'shop');
+      document.getElementById('nav-contact').classList.toggle('active', tab === 'contact');
+
+      document.getElementById('page-home').style.display = tab === 'home' ? 'block' : 'none';
+      document.getElementById('page-shop').style.display = tab === 'shop' ? 'block' : 'none';
+      document.getElementById('page-contact').style.display = tab === 'contact' ? 'block' : 'none';
+    }
+
+    function filterCategory(category, btnElement) {
+      selectedCategory = category;
+      document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const list = document.getElementById('product-list');
+      const fallbackImage = 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500';
+      const t = translations[currentLang];
+
+      const filteredProducts = (selectedCategory === "All" || isAdmin)
+        ? products 
+        : products.filter(p => (p.category || 'Accessories').toLowerCase() === selectedCategory.toLowerCase());
+
+      if (filteredProducts.length === 0) {
+        list.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">${t.noProducts}</p>`;
+        return;
+      }
+
+      list.innerHTML = filteredProducts.map(p => {
+        let stockBadge = `<span class="badge-stock stock-ok">In Stock (${p.stock})</span>`;
+        if (p.stock <= 0) stockBadge = `<span class="badge-stock stock-out">${t.outOfStock}</span>`;
+        else if (p.stock <= 3) stockBadge = `<span class="badge-stock stock-low">🔥 Only ${p.stock} left!</span>`;
+
+        return `
+          <div class="card">
+            <div class="card-img-wrapper">
+              <span class="badge-category">${p.category || 'Tech'}</span>
+              <img src="${p.image}" alt="${p.title}" onerror="this.onerror=null; this.src='${fallbackImage}';">
+            </div>
+            <div>
+              ${stockBadge}
+              <h3 class="card-title">${p.title}</h3>
+              <div class="card-price">${formatPrice(p.price)}</div>
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%; margin-top: 10px; justify-content: center;" onclick="addToCart(${p.id})" ${p.stock <= 0 ? 'disabled' : ''}>
+              🛒 ${t.addToCart}
+            </button>
+
+            ${isAdmin ? `
+              <div style="display:flex; gap:5px; margin-top:8px;">
+                <button class="btn" style="flex:1; justify-content:center; background:#f59e0b; color:white;" onclick="editProduct(${p.id})">${t.edit}</button>
+                <button class="btn" style="flex:1; justify-content:center; background:var(--danger); color:white;" onclick="deleteProduct(${p.id})">${t.delete}</button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleAdminAuth() {
+      const t = translations[currentLang];
+      if (!isAdmin) {
+        const pass = prompt('Enter Admin Password:');
+        if (pass === ADMIN_PASS) {
+          isAdmin = true;
+          document.getElementById('admin-btn').innerText = t.logout;
+          document.getElementById('main-nav').style.display = 'none';
+          document.getElementById('category-bar').style.display = 'none';
+          document.getElementById('admin-bar').style.display = 'block';
+          switchTab('shop');
+          renderProducts();
+        }
+      } else {
+        isAdmin = false;
+        document.getElementById('admin-btn').innerText = t.login;
+        document.getElementById('main-nav').style.display = 'flex';
+        document.getElementById('category-bar').style.display = 'flex';
+        document.getElementById('admin-bar').style.display = 'none';
+        switchTab('home');
+        renderProducts();
+      }
+    }
+
+    function openProductModal() {
+      document.getElementById('prod-id').value = '';
+      document.getElementById('product-form').reset();
+      document.getElementById('product-modal').style.display = 'flex';
+    }
+
+    function editProduct(id) {
+      const p = products.find(prod => prod.id === id);
+      if (!p) return;
+      document.getElementById('prod-id').value = p.id;
+      document.getElementById('prod-title').value = p.title;
+      document.getElementById('prod-category').value = p.category || 'Smartphones';
+      document.getElementById('prod-price').value = p.price;
+      document.getElementById('prod-stock').value = p.stock;
+      document.getElementById('prod-image').value = p.image;
+      document.getElementById('product-modal').style.display = 'flex';
+    }
+
+    document.getElementById('product-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = document.getElementById('prod-id').value;
+      const productData = {
+        id: id ? parseInt(id) : products.length + 1,
+        title: document.getElementById('prod-title').value,
+        category: document.getElementById('prod-category').value,
+        price: parseFloat(document.getElementById('prod-price').value),
+        stock: parseInt(document.getElementById('prod-stock').value),
+        image: document.getElementById('prod-image').value
+      };
+
+      if (id) {
+        const idx = products.findIndex(p => p.id === parseInt(id));
+        if (idx !== -1) products[idx] = productData;
+      } else {
+        products.unshift(productData);
+      }
+
+      closeModal('product-modal');
+      renderProducts();
+    });
+
+    function deleteProduct(id) {
+      if (!confirm('Are you sure you want to delete this product?')) return;
+      products = products.filter(p => p.id !== id);
+      renderProducts();
+    }
+
+    function addToCart(id) {
+      const prod = products.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+
+      if (existing) {
+        if (existing.quantity < prod.stock) existing.quantity++;
+        else return alert('Cannot add more than available stock!');
+      } else {
+        cart.push({ ...prod, quantity: 1 });
+      }
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cart-count').innerText = totalItems;
+    }
+
+    function openCart() {
+      if (cart.length === 0) return alert('Your cart is empty!');
+      const summary = document.getElementById('cart-summary');
+      let totalEtb = 0;
+
+      summary.innerHTML = cart.map(item => {
+        const itemTotalEtb = item.price * item.quantity;
+        totalEtb += itemTotalEtb;
+        return `<div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
+          <span>${item.title} (x${item.quantity})</span>
+          <strong>${formatPrice(itemTotalEtb)}</strong>
+        </div>`;
+      }).join('');
+
+      document.getElementById('cart-total').innerText = formatPrice(totalEtb);
+      document.getElementById('checkout-modal').style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
