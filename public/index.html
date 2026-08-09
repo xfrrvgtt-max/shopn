@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Premium Tech Store</title>
@@ -350,6 +351,42 @@
       text-align: center;
       margin-bottom: 30px;
     }
+    /* --- MOBILE RESPONSIVENESS FIX --- */
+
+/* For screens smaller than 768px (phones) */
+@media (max-width: 768px) {
+    /* Make the navigation bar items stack instead of line up horizontally */
+    nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    /* Adjust the header logo and menu spacing */
+    header {
+        text-align: center;
+    }
+
+    /* Ensure your "Explore Catalog" button isn't too wide */
+    .hero-section button, .explore-btn {
+        width: 90%;
+        margin: 0 auto;
+        padding: 12px 20px;
+    }
+
+    /* Make text size a little smaller on mobile for better readability */
+    h1 {
+        font-size: 24px;
+    }
+
+    /* Ensure images don't overflow the phone screen */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
   </style>
 </head>
 <body>
