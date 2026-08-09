@@ -442,6 +442,57 @@
         font-size: 12px;
     }
 }
+    /* --- COMPACT GRID FOR BOTH MOBILE AND DESKTOP --- */
+.product-grid, .products-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row on desktop */
+    gap: 15px;
+    padding: 20px;
+}
+
+.product-card, .card {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+}
+
+.product-card img, .card img {
+    height: 130px;
+    object-fit: cover;
+}
+
+/* Make sure Add New Product button is visible everywhere */
+.add-product-btn, #addProductBtn {
+    display: inline-block !important;
+    margin: 15px;
+}
+
+/* Mobile Screen Adjustments */
+@media (max-width: 768px) {
+    .product-grid, .products-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 compact items per row on phones */
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .product-card img, .card img {
+        height: 100px; /* Smaller image height for phones */
+    }
+
+    .product-card h3, .card h3 {
+        font-size: 13px;
+    }
+
+    .product-card p, .card p {
+        font-size: 11px;
+    }
+
+    /* Stack admin buttons neatly or shrink them to fit small cards */
+    .product-card button, .card button {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+}
     
   </style>
 </head>
