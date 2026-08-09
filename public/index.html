@@ -409,88 +409,48 @@
 }
 
 /* For Mobile screens: fit two smaller cards per row if possible, or keep them neatly sized */
+/* --- FORCE SMALL COMPACT PRODUCT CARDS --- */
+.product-grid, .products-container, #productContainer, [id*="product"] {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+    padding: 10px !important;
+}
+
+.product-card, .card, [class*="card"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 8px !important;
+}
+
+.product-card img, .card img, [class*="card"] img {
+    height: 120px !important;
+    object-fit: cover !important;
+}
+
+/* Mobile: Force 2 small items per row */
 @media (max-width: 768px) {
-    .product-grid, .products-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Creates two columns on mobile */
-        gap: 10px;
-        padding: 10px;
+    .product-grid, .products-container, #productContainer, [id*="product"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+        padding: 4px !important;
     }
 
-    .product-card, .card {
-        width: 100%;
-        max-width: 100%;
-        padding: 8px;
+    .product-card img, .card img, [class*="card"] img {
+        height: 90px !important;
     }
 
-    .product-card img, .card img {
-        height: 110px; /* Shorter image height for mobile */
+    .product-card h3, .card h3, [class*="card"] h3 {
+        font-size: 12px !important;
     }
 
-    /* Make text and buttons smaller so they fit the small cards */
-    .product-card h3, .card h3 {
-        font-size: 14px;
+    .product-card p, .card p, [class*="card"] p {
+        font-size: 10px !important;
     }
 
-    .product-card p, .card p {
-        font-size: 12px;
-    }
-
-    .product-card button, .card button, 
-    .product-card .admin-btn {
-        padding: 6px 10px;
-        font-size: 12px;
-    }
-}
-    /* --- COMPACT GRID FOR BOTH MOBILE AND DESKTOP --- */
-.product-grid, .products-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 items per row on desktop */
-    gap: 15px;
-    padding: 20px;
-}
-
-.product-card, .card {
-    width: 100%;
-    max-width: 100%;
-    padding: 12px;
-}
-
-.product-card img, .card img {
-    height: 130px;
-    object-fit: cover;
-}
-
-/* Make sure Add New Product button is visible everywhere */
-.add-product-btn, #addProductBtn {
-    display: inline-block !important;
-    margin: 15px;
-}
-
-/* Mobile Screen Adjustments */
-@media (max-width: 768px) {
-    .product-grid, .products-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 compact items per row on phones */
-        gap: 8px;
-        padding: 8px;
-    }
-
-    .product-card img, .card img {
-        height: 100px; /* Smaller image height for phones */
-    }
-
-    .product-card h3, .card h3 {
-        font-size: 13px;
-    }
-
-    .product-card p, .card p {
-        font-size: 11px;
-    }
-
-    /* Stack admin buttons neatly or shrink them to fit small cards */
-    .product-card button, .card button {
-        padding: 5px 8px;
-        font-size: 11px;
+    .product-card button, .card button, [class*="card"] button {
+        padding: 4px 6px !important;
+        font-size: 10px !important;
     }
 }
     
