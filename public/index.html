@@ -357,6 +357,15 @@
 
     /* --- FIX MOBILE MENU OVERLAP --- */
 @media (max-width: 768px) {
+ 
+    /* Ensure the Add New Product button is visible and centered for admins */
+    .add-product-btn, #addProductBtn, .admin-actions {
+        display: block !important;
+        width: 90% !important;
+        margin: 10px auto !important;
+        text-align: center !important;
+    }
+
     /* Make the header layout stack vertically so nothing overlaps */
     header, .nav-container, nav {
         position: relative;
@@ -385,6 +394,7 @@
         margin-top: 10px;
     }
 }
+    
   </style>
 </head>
 <body>
