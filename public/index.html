@@ -34,8 +34,68 @@
       background-color: var(--bg-color);
       color: var(--text-color);
       margin: 0;
-      padding-top: 110px;
+      padding-top: 90px;
       padding-bottom: 40px;
+    }
+
+    .promo-banner {
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      color: white;
+      text-align: center;
+      padding: 8px 15px;
+      font-size: 13px;
+      font-weight: 600;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1100;
+    }
+
+    /* --- CLEAN HEADER FIX --- */
+    header {
+      position: fixed;
+      top: 33px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 10px 4% !important;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      gap: 15px;
+    }
+
+    body.dark-mode header {
+      background: rgba(17, 24, 39, 0.9);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    /* Keep header items inline */
+    header nav, .header-actions, .controls, div[class*="action"], div[class*="btn"] {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    header button, header .btn {
+      width: auto !important;
+      padding: 6px 12px !important;
+      font-size: 13px !important;
     }
 
     .container {
@@ -44,7 +104,7 @@
       padding: 0 20px;
     }
 
-    /* --- HARD FORCE 4 COLUMNS ON DESKTOP --- */
+    /* --- 4 COLUMNS DESKTOP GRID --- */
     #productContainer, .product-grid, .products-container, .grid {
       display: grid !important;
       grid-template-columns: repeat(4, 1fr) !important;
@@ -52,7 +112,7 @@
       width: 100% !important;
     }
 
-    /* --- INDIVIDUAL PRODUCT CARD FIX --- */
+    /* --- PRODUCT CARD STYLING --- */
     .product-card, .card, #productContainer > div, .products-container > div {
       display: flex !important;
       flex-direction: column !important;
@@ -61,12 +121,10 @@
       border-radius: 14px !important;
       padding: 12px !important;
       width: 100% !important;
-      max-width: 100% !important;
       box-sizing: border-box !important;
       box-shadow: var(--shadow-sm) !important;
     }
 
-    /* --- IMAGE FIX --- */
     .product-card img, .card img, #productContainer img {
       width: 100% !important;
       height: 140px !important;
@@ -74,7 +132,6 @@
       border-radius: 10px !important;
     }
 
-    /* --- TEXT & BUTTON FIXES --- */
     .product-card h3, .card h3, .card-title {
       font-size: 14px !important;
       font-weight: 700 !important;
@@ -97,6 +154,11 @@
 
     /* --- MOBILE RESPONSIVE (2 ITEMS PER ROW) --- */
     @media (max-width: 768px) {
+      header {
+        padding: 8px 2% !important;
+        gap: 8px;
+      }
+
       #productContainer, .product-grid, .products-container, .grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 10px !important;
