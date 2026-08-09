@@ -108,7 +108,7 @@
       padding: 0 24px;
     }
 
-    #productContainer, .product-grid, .products-container, .grid {
+    #product-list, .product-grid, .products-container, .grid {
       display: grid !important;
       grid-template-columns: repeat(4, 1fr) !important;
       gap: 24px !important;
@@ -116,7 +116,7 @@
     }
 
     /* --- MODERN PRODUCT CARDS --- */
-    .product-card, .card, #productContainer > div, .products-container > div {
+    .card {
       display: flex !important;
       flex-direction: column !important;
       background-color: var(--card-bg) !important;
@@ -129,12 +129,12 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .product-card:hover, .card:hover {
+    .card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-md) !important;
     }
 
-    .product-card img, .card img, #productContainer img {
+    .card img {
       width: 100% !important;
       height: 160px !important;
       object-fit: cover !important;
@@ -142,7 +142,7 @@
       background-color: var(--border-color);
     }
 
-    .product-card h3, .card h3, .card-title {
+    .card-title {
       font-size: 15px !important;
       font-weight: 700 !important;
       color: var(--text-color);
@@ -150,7 +150,7 @@
       letter-spacing: -0.2px;
     }
 
-    .product-card p, .card p, .card-price {
+    .card-price {
       font-size: 14px !important;
       color: var(--text-muted);
       margin: 0 0 12px 0 !important;
@@ -166,27 +166,15 @@
       border-radius: 8px !important;
       cursor: pointer;
       transition: background-color 0.2s;
+      padding: 10px !important;
+      font-size: 13px !important;
     }
 
     button:hover, .btn:hover {
       background-color: var(--primary-hover) !important;
     }
 
-    .product-card button, .card button, .btn-action {
-      margin-top: auto !important;
-      width: 100% !important;
-      padding: 10px !important;
-      font-size: 13px !important;
-      justify-content: center !important;
-    }
-
     /* --- CONTROL FORMS & INPUTS --- */
-    form, .form-container, div:has(> input), div:has(> select) {
-      max-width: 650px !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
-    }
-
     input:not([type="checkbox"]):not([type="radio"]), select, textarea {
       width: 100% !important;
       max-width: 100% !important;
@@ -198,7 +186,6 @@
       color: var(--text-color) !important;
       font-size: 14px !important;
       margin-bottom: 12px;
-      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -218,32 +205,27 @@
         font-size: 16px !important;
       }
 
-      #productContainer, .product-grid, .products-container, .grid {
+      #product-list, .product-grid, .products-container, .grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
       }
 
-      .product-card {
+      .card {
         padding: 10px !important;
       }
 
-      .product-card img, .card img, #productContainer img {
+      .card img {
         height: 110px !important;
       }
 
-      .product-card h3, .card h3, .card-title {
+      .card-title {
         font-size: 13px !important;
         margin: 8px 0 4px 0 !important;
       }
 
-      .product-card p, .card p, .card-price {
+      .card-price {
         font-size: 12px !important;
         margin-bottom: 8px !important;
-      }
-
-      .product-card button, .card button {
-        padding: 8px !important;
-        font-size: 11px !important;
       }
     }
   </style>
